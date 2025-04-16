@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Royal Hotel</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Ubuntu", sans-serif;
+        }
+
+        .main {
+            position: relative;
+            min-height: 100vh;
+            background: rgb(81, 201, 231);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 30px 100px;
+        }
+
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            max-width: 90px;
+        }
+
+        .navigation {
+            display: flex;
+        }
+
+        .navigation li {
+            list-style: none;
+        }
+
+        .navigation li a {
+            position: relative;
+            color: #fff;
+            text-decoration: none;
+            margin-left: 40px;
+        }
+
+        .content {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content .text {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .content .text h2 {
+            color: #1e1d1d;
+            font-size: 5em;
+            font-weight: 300;
+        }
+
+        .content .text h2 span {
+            font-weight: 700;
+        }
+
+        .content .text p {
+            color: #141313;
+            font-weight: 400;
+            font-size: 1.1em;
+            line-height: 1.5em;
+            margin: 20px 0;
+        }
+
+        .btn {
+            position: relative;
+            display: inline-block;
+            padding: 20px 50px;
+            background: #fff;
+            color: #333;
+            font-size: 1.1em;
+            font-weight: 500;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.25s;
+        }
+
+        .btn:hover {
+            letter-spacing: 2px;
+        }
+
+        .slider {
+            position: relative;
+        }
+
+        .slider .slides {
+            display: none;
+        }
+
+        .slider .slides.active {
+            display: block;
+        }
+
+        .slider .slides img {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            padding: 30px 100px;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .sci {
+            display: flex;
+        }
+
+        .sci li {
+            list-style: none;
+        }
+
+        .sci li a {
+            color: #fff;
+            font-size: 2em;
+            margin-right: 20px;
+            display: inline-block;
+            transition: 0.25s;
+        }
+
+        .sci li a:hover {
+            transform: translateY(-5px);
+        }
+
+        .prevNext {
+            position: relative;
+            user-select: none;
+        }
+
+        .prevNext p {
+            position: relative;
+            color: #fff;
+            text-align: end;
+            margin-bottom: 15px;
+        }
+
+        .prevNext p::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -35px;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 2px;
+            background: #fff;
+        }
+
+        .prevNext span {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border: 2px solid #fff;
+            cursor: pointer;
+            font-size: 2em;
+            color: #fff;
+        }
+
+        .prevNext span:nth-child(2) {
+            margin-right: 20px;
+        }
+
+        /* now, make it responsive */
+        @media (max-width: 991px) {
+            .main {
+                padding: 40px;
+            }
+
+            header {
+                padding: 20px 40px;
+            }
+
+            .logo {
+                max-width: 70px;
+            }
+
+            .content {
+                flex-direction: column;
+                margin: 120px 0 40px;
+            }
+
+            .content .text {
+                max-width: 100%;
+            }
+
+            .content .text h2 {
+                font-size: 4em;
+            }
+
+            .slider {
+                margin-top: 40px;
+            }
+
+            .slider .slides img {
+                width: 200%;
+                max-width: 420px;
+            }
+
+            .footer {
+                position: relative;
+                padding: 0;
+            }
+
+            .navigation {
+                display: none;
+            }
+
+            .navigation.active {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #d10a20;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .navigation li a {
+                font-size: 1.5em;
+                margin: 10px 0;
+                display: inline-block;
+            }
+
+            .toggle {
+                position: relative;
+                width: 32px;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 100000;
+                cursor: pointer;
+            }
+
+            .toggle.active {
+                position: fixed;
+                right: 40px;
+            }
+
+            .toggle::before {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 2px;
+                background: #fff;
+                transform: translateY(-10px);
+                box-shadow: 0 10px 0 #fff;
+                transition: 0.25s;
+            }
+
+            .toggle.active::before {
+                transform: translateY(0px) rotate(45deg);
+                box-shadow: 0 0 0 #fff;
+            }
+
+            .toggle::after {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 2px;
+                background: #fff;
+                transform: translateY(10px);
+                transition: 0.25s;
+            }
+
+            .toggle.active::after {
+                transform: translateY(0px) rotate(-45deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            header,
+            .main {
+                padding: 20px;
+            }
+
+            .toggle.active {
+                right: 20px;
+            }
+
+            .content .text h2 {
+                font-size: 3em;
+            }
+
+            .btn {
+                padding: 15px 30px;
+            }
+
+            .footer {
+                flex-direction: column-reverse;
+                align-items: center;
+            }
+
+            .sci {
+                margin-top: 40px;
+            }
+        }
+
+
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700);
+        .footer-distributed {
+            background: #666;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+            box-sizing: border-box;
+            width: 100%;
+            text-align: left;
+            font: bold 16px sans-serif;
+            padding: 55px 50px;
+        }
+
+        .footer-distributed .footer-left,
+        .footer-distributed .footer-center,
+        .footer-distributed .footer-right {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        /* Footer left */
+
+        .footer-distributed .footer-left {
+            width: 40%;
+        }
+
+        /* The company logo */
+
+        .footer-distributed h3 {
+            color: #ffffff;
+            font: normal 36px 'Open Sans', cursive;
+            margin: 0;
+        }
+
+        .footer-distributed h3 span {
+            color: lightseagreen;
+        }
+
+        /* Footer links */
+
+        .footer-distributed .footer-links {
+            color: #ffffff;
+            margin: 20px 0 12px;
+            padding: 0;
+        }
+
+        .footer-distributed .footer-links a {
+            display: inline-block;
+            line-height: 1.8;
+            font-weight: 400;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .footer-distributed .footer-company-name {
+            color: #222;
+            font-size: 14px;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        /* Footer Center */
+
+        .footer-distributed .footer-center {
+            width: 35%;
+        }
+
+        .footer-distributed .footer-center i {
+            background-color: #33383b;
+            color: #ffffff;
+            font-size: 25px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 42px;
+            margin: 10px 15px;
+            vertical-align: middle;
+        }
+
+        .footer-distributed .footer-center i.fa-envelope {
+            font-size: 17px;
+            line-height: 38px;
+        }
+
+        .footer-distributed .footer-center p {
+            display: inline-block;
+            color: #ffffff;
+            font-weight: 400;
+            vertical-align: middle;
+            margin: 0;
+        }
+
+        .footer-distributed .footer-center p span {
+            display: block;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        .footer-distributed .footer-center p a {
+            color: lightseagreen;
+            text-decoration: none;
+            ;
+        }
+
+        .footer-distributed .footer-links a:before {
+            content: "|";
+            font-weight: 300;
+            font-size: 20px;
+            left: 0;
+            color: #fff;
+            display: inline-block;
+            padding-right: 5px;
+        }
+
+        .footer-distributed .footer-links .link-1:before {
+            content: none;
+        }
+
+        /* Footer Right */
+
+        .footer-distributed .footer-right {
+            width: 20%;
+        }
+
+        .footer-distributed .footer-company-about {
+            line-height: 20px;
+            color: #92999f;
+            font-size: 13px;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        .footer-distributed .footer-company-about span {
+            display: block;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .footer-distributed .footer-icons {
+            margin-top: 25px;
+        }
+
+        .footer-distributed .footer-icons a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            background-color: #33383b;
+            border-radius: 2px;
+
+            font-size: 20px;
+            color: #ffffff;
+            text-align: center;
+            line-height: 35px;
+
+            margin-right: 3px;
+            margin-bottom: 5px;
+        }
+
+        /* If you don't want the footer to be responsive, remove these media queries */
+
+        @media (max-width: 880px) {
+
+
+            .footer-distributed .footer-left,
+            .footer-distributed .footer-center,
+            .footer-distributed .footer-right {
+                display: block;
+                width: 100%;
+                margin-bottom: 40px;
+                text-align: center;
+            }
+
+            .footer-distributed .footer-center i {
+                margin-left: 0;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <section class="main">
+        <header>
+            <a href="#"><img src="logomain.jpg" class="logo"></a>
+            <div class="toggle"></div>
+            <ul class="navigation">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Menu</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </header>
+        <div class="content">
+            <div class="text">
+                <h2>The<br>Royal <span>Hotel.</span></h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, adipisci obcaecati! Accusamus fugiat
+                    obcaecati nesciunt maiores rerum placeat amet voluptatibus cumque soluta similique saepe, assumenda
+                    eos dolorum autem. Iusto enim accusamus optio cupiditate earum ipsam!</p>
+                <a href="order.html" class="btn">Order Now</a>
+                <a href="index5.html" class="btn">Book Now</a>
+            </div>
+            <div class="slider">
+                <div class="slides active">
+                    <img src="logomain.jpg">
+                </div>
+                <div class="slides">
+                    <img src="hotel.png">
+                </div>
+                <div class="slides">
+                    <img src="1.jpg">
+                </div>
+                <div class="slides">
+                    <img src="2.jpg">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <ul class="sci">
+                <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
+                <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
+                <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+            </ul>
+            <div class="prevNext">
+                <p>Always Fresh</p>
+                <span class="prev"><ion-icon name="chevron-back-outline"></ion-icon></span>
+                <span class="next"><ion-icon name="chevron-forward-outline"></ion-icon></span>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer-distributed">
+
+        <div class="footer-left">
+
+            <h3>Hotel <span>logo</span></h3>
+
+            <p class="footer-links">
+                <a href="#" class="link-1">Home</a>
+
+                <a href="#">Blog</a>
+
+                <a href="#">Pricing</a>
+
+                <a href="#">About</a>
+
+                <a href="#">Faq</a>
+
+                <a href="#">Contact</a>
+            </p>
+
+            <p class="footer-company-name">Hotel Name © 2015</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>444 S. Cedros Ave</span> Solana Beach, California</p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>+91 8355735963</p>
+            </div>
+
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:support@company.com">support@Hotel.com</a></p>
+            </div>
+
+        </div>
+
+        <div class="footer-right">
+
+            <p class="footer-company-about">
+                <span>About the Hotel</span>
+                Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus
+                vehicula sit amet.
+            </p>
+
+            <ul class="sci">
+                <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
+                <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
+                <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+            </ul>
+
+        </div>
+
+    </footer>
+
+
+
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        //toggle 
+        const menutoggle = document.querySelector('.toggle');
+        const navigation = document.querySelector('.navigation');
+        menutoggle.onclick = function () {
+            menutoggle.classList.toggle('active')
+            navigation.classList.toggle('active')
+        }
+
+        //slider
+        const slides = document.querySelectorAll('.slides');
+        const prev = document.querySelector('.prev');
+        const next = document.querySelector('.next');
+
+        i = 0;
+
+        function ActiveSlide(n) {
+            for (slide of slides)
+                slide.classList.remove('active');
+            slides[n].classList.add('active');
+        }
+
+        // function for next btn
+        next.addEventListener('click', function () {
+            if (i == slides.length - 1) {
+                i = 0;
+                ActiveSlide(i);
+            }
+            else {
+                i++;
+                ActiveSlide(i);
+            }
+        })
+
+        // function for prev btn
+        prev.addEventListener('click', function () {
+            if (i == 0) {
+                i = slides.length - 1;
+                ActiveSlide(i);
+            }
+            else {
+                i--;
+                ActiveSlide(i);
+            }
+        })
+    </script>
+</body>
+
+</html>
